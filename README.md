@@ -135,6 +135,5 @@ You can clone or download the project here:
 **Byiringiro Niyonagize Olivier ID 27119** 
 
 **Fatime Dadi Wardougou 25858**
-pl/sql
 
-**Semelane Temana Tlhohonolofatso 27293
+**Semelane Temana Tlhohonolofatso 27293**
