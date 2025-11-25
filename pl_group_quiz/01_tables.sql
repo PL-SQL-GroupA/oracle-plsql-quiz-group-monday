@@ -1,9 +1,11 @@
+-- Creation of table target_table to test the trigger
 CREATE TABLE target_table (
     id          NUMBER GENERATED ALWAYS AS IDENTITY,
     data_value  VARCHAR2(100),
     created_at  DATE DEFAULT SYSDATE
 );
 
+-- Creation of table access_errors_log to store all error logs
 CREATE TABLE access_errors_log (
     log_id        NUMBER GENERATED ALWAYS AS IDENTITY,
     username      VARCHAR2(50),
@@ -13,6 +15,7 @@ CREATE TABLE access_errors_log (
     reason        VARCHAR2(200)
 );
 
+-- Creation of tables to use in the implementation of the package
 CREATE TABLE employees (
     emp_id      NUMBER PRIMARY KEY,
     emp_name    VARCHAR2(100),
