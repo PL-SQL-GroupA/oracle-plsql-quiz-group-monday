@@ -1,4 +1,3 @@
--- Recreate the HR Management Package with fixes
 CREATE OR REPLACE PACKAGE hr_management_pkg 
 AUTHID CURRENT_USER  -- INVOKER RIGHTS: Executes with privileges of current user
 IS
@@ -31,13 +30,7 @@ END hr_management_pkg;
 
 CREATE OR REPLACE PACKAGE BODY hr_management_pkg IS
 
-    /*
-    ============================================================================
-    FUNCTION: calculate_rssb_tax
-    PURPOSE:  Calculates RSSB tax for a specific employee
-    SECURITY: Uses INVOKER rights (AUTHID CURRENT_USER)
-    ============================================================================
-    */
+   
     FUNCTION calculate_rssb_tax(
         p_emp_id IN employees.emp_id%TYPE
     ) RETURN NUMBER
@@ -64,13 +57,7 @@ CREATE OR REPLACE PACKAGE BODY hr_management_pkg IS
             RAISE_APPLICATION_ERROR(-20002, 'Error calculating RSSB tax: ' || SQLERRM);
     END calculate_rssb_tax;
 
-    /*
-    ============================================================================
-    FUNCTION: calculate_net_salary
-    PURPOSE:  Calculates net salary after deducting RSSB tax
-    SECURITY: Uses INVOKER rights (AUTHID CURRENT_USER)
-    ============================================================================
-    */
+    
     FUNCTION calculate_net_salary(
         p_emp_id IN employees.emp_id%TYPE
     ) RETURN NUMBER
@@ -96,20 +83,8 @@ CREATE OR REPLACE PACKAGE BODY hr_management_pkg IS
             RAISE_APPLICATION_ERROR(-20002, 'Error calculating net salary: ' || SQLERRM);
     END calculate_net_salary;
 
-    /*
-    ============================================================================
-    PROCEDURE: update_employee_salary
-    PURPOSE:  Dynamically updates employee salary and maintains audit trail
-    SECURITY: Uses INVOKER rights (AUTHID CURRENT_USER)
-    
-    NOTES ON USER vs CURRENT_USER:
-    - USER: Returns the name of the session user (who logged in)
-    - CURRENT_USER: Returns the name of the user whose privileges are currently active
-    - In DEFINER rights (AUTHID DEFINER), USER and CURRENT_USER are the same (package owner)
-    - In INVOKER rights (AUTHID CURRENT_USER), USER is the session user, 
-      CURRENT_USER is the user whose privileges are active (usually the same as USER)
-    ============================================================================
-    */
+
+
     PROCEDURE update_employee_salary(
         p_emp_id IN employees.emp_id%TYPE,
         p_new_salary IN employees.salary%TYPE
@@ -154,13 +129,8 @@ CREATE OR REPLACE PACKAGE BODY hr_management_pkg IS
             RAISE_APPLICATION_ERROR(-20004, 'Error updating salary: ' || SQLERRM);
     END update_employee_salary;
 
-    /*
-    ============================================================================
-    PROCEDURE: generate_salary_report
-    PURPOSE:  Generates a dynamic salary report for all employees
-    SECURITY: Uses INVOKER rights (AUTHID CURRENT_USER)
-    ============================================================================
-    */
+
+
     PROCEDURE generate_salary_report
     IS
         v_sql_string VARCHAR2(2000);
@@ -221,13 +191,9 @@ CREATE OR REPLACE PACKAGE BODY hr_management_pkg IS
             RAISE_APPLICATION_ERROR(-20005, 'Error generating report: ' || SQLERRM);
     END generate_salary_report;
 
-    /*
-    ============================================================================
-    PROCEDURE: bulk_update_salaries (Optional Challenge)
-    PURPOSE:  Updates salaries for all employees using bulk processing
-    SECURITY: Uses INVOKER rights (AUTHID CURRENT_USER)
-    ============================================================================
-    */
+
+
+
     PROCEDURE bulk_update_salaries(
         p_percentage_raise IN NUMBER
     )
@@ -269,4 +235,5 @@ CREATE OR REPLACE PACKAGE BODY hr_management_pkg IS
 
 END hr_management_pkg;
 /
+
 
